@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@ratu/core": ["./packages/core/src"],
+      "@ratu/llm": ["./packages/llm/src"],
+      "@ratu/rag": ["./packages/rag/src"],
+      "@ratu/discovery": ["./packages/discovery/src"],
+      "@ratu/voice": ["./packages/voice/src"],
+      "@ratu/analytics": ["./packages/analytics/src"],
+      "@ratu/auth": ["./packages/auth/src"],
+      "@ratu/audit": ["./packages/audit/src"],
+      "@ratu/ui": ["./packages/ui/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "build", ".next"]
+}

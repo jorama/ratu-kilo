@@ -1,0 +1,29 @@
+{
+  "name": "ratu-sovereign-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ratu Sovereign AI - Multi-tenant SaaS with Kimi K2 base model",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "db:migrate": "cd packages/core && npm run migrate",
+    "db:seed": "cd infra/seed && npm run seed",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "turbo": "^1.11.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "Ratu Sovereign AI",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+
+  "forwardPorts": [
+    3000,
+    3001,
+    3002,
+    3003,
+    5432,
+    6333,
+    6379,
+    9000
+  ],
+
+  "portsAttributes": {
+    "3000": {
+      "label": "Marketing Website",
+      "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "API Gateway",
+      "onAutoForward": "notify"
+    },
+    "3002": {
+      "label": "Console",
+      "onAutoForward": "silent"
+    },
+    "3003": {
+      "label": "Dashboard",
+      "onAutoForward": "silent"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    },
+    "6333": {
+      "label": "Qdrant",
+      "onAutoForward": "silent"
+    },
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "silent"
+    },
+    "9000": {
+      "label": "MinIO",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-azuretools.vscode-docker",
+        "hashicorp.terraform"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "npm install",
+
+  "postStartCommand": "docker-compose up -d",
+
+  "remoteUser": "node"
+}

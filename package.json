@@ -13,12 +13,21 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
-    "db:migrate": "cd packages/core && npm run migrate",
+    "db:migrate": "cd packages/db && npm run migrate",
     "db:seed": "cd infra/seed && npm run seed",
     "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "start:all": "concurrently --names \"API,WORKER,WEBSITE,DASHBOARD,CONSOLE\" -c \"blue,green,magenta,cyan,yellow\" \"npm run start:api\" \"npm run start:worker\" \"npm run start:website\" \"npm run start:dashboard\" \"npm run start:console\"",
+    "start:api": "cd apps/api && npm run dev",
+    "start:worker": "cd apps/worker && npm run dev",
+    "start:website": "cd apps/website && npm run dev",
+    "start:dashboard": "cd apps/dashboard && npm run dev",
+    "start:console": "cd apps/console && npm run dev",
+    "setup": "npm install && npm run docker:up && timeout 15 && npm run db:migrate && npm run db:seed",
+    "launch": "npm run docker:up && timeout 10 && npm run start:all"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "turbo": "^1.11.0",
     "typescript": "^5.3.3"
   },

@@ -75,6 +75,43 @@ ratu-sovereign-ai/
 
 ### Installation
 
+#### Option 1: One-Command Launch (Recommended) 🚀
+
+```bash
+# Clone repository
+git clone https://github.com/jorama/ratu-kilo.git
+cd ratu-kilo
+
+# Copy and edit environment file
+cp .env.example .env
+# Edit .env with your API keys (KIMI_K2_API_KEY, EMBEDDINGS_API_KEY, JWT_SECRET)
+
+# Launch everything with ONE command!
+# Linux/Mac:
+./scripts/launch.sh
+
+# Windows:
+scripts\launch.bat
+
+# Or using npm:
+npm run launch
+```
+
+This single command will:
+- ✅ Start Docker infrastructure (PostgreSQL, Redis, Qdrant, MinIO)
+- ✅ Wait for services to be ready
+- ✅ Run database migrations
+- ✅ Seed demo data
+- ✅ Start API Gateway (port 3001)
+- ✅ Start Worker (background jobs)
+- ✅ Start Marketing Website (port 3000)
+- ✅ Start Dashboard (port 3003)
+- ✅ Start Console (port 3002)
+
+**All services running in one terminal with color-coded logs!**
+
+#### Option 2: Manual Setup
+
 ```bash
 # Clone repository
 git clone https://github.com/jorama/ratu-kilo.git
@@ -89,15 +126,28 @@ cp .env.example .env
 # Edit .env with your credentials
 nano .env
 
+# Start infrastructure
+docker-compose up -d
+
 # Run database migrations
 npm run db:migrate
 
-# Seed demo data (optional)
+# Seed demo data
 npm run db:seed
 
-# Start development servers
-npm run dev
+# Start all services
+npm run start:all
 ```
+
+#### Option 3: GitHub Codespaces (Zero Setup) ☁️
+
+1. Go to https://github.com/jorama/ratu-kilo
+2. Click **Code** → **Codespaces** → **Create codespace**
+3. Wait 2-3 minutes for automatic setup
+4. Run `./scripts/launch.sh`
+5. All services auto-configured and running!
+
+See [CODESPACES_GUIDE.md](CODESPACES_GUIDE.md) for details.
 
 ### Docker Compose (Recommended)
 

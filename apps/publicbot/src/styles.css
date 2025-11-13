@@ -1,0 +1,174 @@
+/* Ratu Widget Styles */
+
+.ratu-widget {
+  position: fixed;
+  z-index: 9999;
+}
+
+.ratu-widget.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.ratu-widget.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.ratu-toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
+}
+
+.ratu-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+.ratu-chat-window {
+  width: 380px;
+  height: 600px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ratu-chat-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ratu-chat-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ratu-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ratu-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ratu-welcome {
+  text-align: center;
+  color: #6b7280;
+  padding: 40px 20px;
+}
+
+.ratu-message {
+  max-width: 80%;
+  padding: 12px;
+  border-radius: 12px;
+  word-wrap: break-word;
+}
+
+.ratu-message-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-left: auto;
+}
+
+.ratu-message-ai {
+  align-self: flex-start;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.ratu-message-content {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ratu-chat-input {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 8px;
+}
+
+.ratu-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.ratu-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ratu-send-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ratu-send-btn:hover {
+  opacity: 0.9;
+}
+
+.ratu-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Dark theme */
+.ratu-widget-container.dark .ratu-chat-window {
+  background: #1f2937;
+}
+
+.ratu-widget-container.dark .ratu-message-ai {
+  background: #374151;
+  color: #f9fafb;
+}
+
+.ratu-widget-container.dark .ratu-chat-input {
+  border-top-color: #374151;
+}
+
+.ratu-widget-container.dark .ratu-input {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f9fafb;
+}

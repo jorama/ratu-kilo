@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "composite": true
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../../packages/core" },
+    { "path": "../../packages/llm" },
+    { "path": "../../packages/rag" },
+    { "path": "../../packages/discovery" },
+    { "path": "../../packages/analytics" },
+    { "path": "../../packages/audit" }
+  ]
+}

@@ -18,6 +18,12 @@ class RatuWidget {
   private container: HTMLDivElement | null = null;
   private isOpen: boolean = false;
   private messages: Array<{ role: string; content: string }> = [];
+  private hasGreeted: boolean = false;
+  private userContext: {
+    industry?: string;
+    role?: string;
+    interests?: string[];
+  } = {};
 
   constructor(config: RatuWidgetConfig) {
     this.config = {
@@ -112,7 +118,94 @@ class RatuWidget {
 
   private toggle() {
     this.isOpen = !this.isOpen;
+    
+    // Send proactive greeting when opened for first time
+    if (this.isOpen && !this.hasGreeted) {
+      this.sendProactiveGreeting();
+      this.hasGreeted = true;
+    }
+    
     this.render();
+  }
+
+  /**
+   * Send proactive sales greeting
+   */
+  private async sendProactiveGreeting() {
+    const greetings = [
+      {
+        message: "👋 Hi! I'm Ratu, your AI assistant. I'd love to learn about your organization and show you how Ratu Sovereign AI can help!",
+        followUp: "What industry is your organization in? (e.g., Government, Healthcare, Education, Enterprise)"
+      },
+      {
+        message: "Welcome! I'm here to help you discover how Ratu can give your organization its own sovereign AI node.",
+        followUp: "What's your biggest challenge with AI or knowledge management right now?"
+      },
+      {
+        message: "Hello! 🧠 I'm Ratu's AI assistant. I can show you how to build your own private AI node with complete data control.",
+        followUp: "Are you looking for AI solutions for customer support, internal knowledge, or something else?"
+      }
+    ];
+
+    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+    // Add greeting message
+    this.messages.push({
+      role: 'assistant',
+      content: greeting.message,
+    });
+
+    this.render();
+
+    // Add follow-up question after a short delay
+    setTimeout(() => {
+      this.messages.push({
+        role: 'assistant',
+        content: greeting.followUp,
+      });
+      this.render();
+    }, 1500);
+  }
+
+  /**
+   * Analyze user response and provide tailored recommendations
+   */
+  private async analyzeAndRespond(userMessage: string) {
+    const lowerMessage = userMessage.toLowerCase();
+
+    // Detect industry
+    if (lowerMessage.includes('government') || lowerMessage.includes('ministry')) {
+      this.userContext.industry = 'government';
+    } else if (lowerMessage.includes('healthcare') || lowerMessage.includes('hospital')) {
+      this.userContext.industry = 'healthcare';
+    } else if (lowerMessage.includes('university') || lowerMessage.includes('education')) {
+      this.userContext.industry = 'education';
+    } else if (lowerMessage.includes('enterprise') || lowerMessage.includes('company')) {
+      this.userContext.industry = 'enterprise';
+    }
+
+    // Detect interests
+    if (lowerMessage.includes('customer support') || lowerMessage.includes('chatbot')) {
+      this.userContext.interests = [...(this.userContext.interests || []), 'customer_support'];
+    }
+    if (lowerMessage.includes('knowledge') || lowerMessage.includes('documents')) {
+      this.userContext.interests = [...(this.userContext.interests || []), 'knowledge_management'];
+    }
+    if (lowerMessage.includes('compliance') || lowerMessage.includes('audit')) {
+      this.userContext.interests = [...(this.userContext.interests || []), 'compliance'];
+    }
+
+    // Build context-aware system prompt
+    let contextPrompt = '';
+    if (this.userContext.industry) {
+      contextPrompt += `The user is from the ${this.userContext.industry} industry. `;
+    }
+    if (this.userContext.interests && this.userContext.interests.length > 0) {
+      contextPrompt += `They are interested in: ${this.userContext.interests.join(', ')}. `;
+    }
+    contextPrompt += 'Tailor your response to their specific needs and highlight relevant Ratu features. Be conversational, helpful, and guide them toward a demo or trial.';
+
+    return contextPrompt;
   }
 
   private async sendMessage() {
@@ -127,12 +220,38 @@ class RatuWidget {
     this.render();
 
     try {
-      // Call API
+      // Analyze user message for context
+      const contextPrompt = await this.analyzeAndRespond(message);
+
+      // Build enhanced system prompt for sales
+      const systemPrompt = `You are Ratu, an AI sales assistant for Ratu Sovereign AI.
+
+Your role is to:
+1. Understand the visitor's needs and challenges
+2. Ask qualifying questions to learn about their organization
+3. Highlight relevant Ratu features and benefits
+4. Guide them toward a free trial or demo
+5. Be conversational, helpful, and consultative (not pushy)
+
+${contextPrompt}
+
+Key selling points to emphasize:
+- True data sovereignty (your data stays yours)
+- Model-off training (base model never retrained)
+- Multi-agent council for complex analysis
+- Citations for every answer (transparency)
+- On-premise deployment options
+- Zero vendor lock-in
+
+Always end responses with a helpful next step or question to keep the conversation going.`;
+
+      // Call API with enhanced prompt
       const response = await axios.post(
         `${this.config.apiUrl}/api/v1/orgs/${this.config.orgId}/chat`,
         {
           query: message,
           citations: false,
+          system_prompt: systemPrompt,
         },
         {
           headers: {
@@ -142,9 +261,16 @@ class RatuWidget {
       );
 
       // Add AI response
+      let aiResponse = response.data.answer;
+
+      // Add contextual CTAs based on conversation
+      if (this.messages.length > 4 && !aiResponse.includes('trial') && !aiResponse.includes('demo')) {
+        aiResponse += '\n\n💡 Would you like to start a free trial or schedule a demo to see Ratu in action?';
+      }
+
       this.messages.push({
         role: 'assistant',
-        content: response.data.answer,
+        content: aiResponse,
       });
 
       this.render();
@@ -158,7 +284,7 @@ class RatuWidget {
       console.error('Chat error:', error);
       this.messages.push({
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
+        content: 'Sorry, I encountered an error. Please try again or contact us at sales@ratu.ai',
       });
       this.render();
     }

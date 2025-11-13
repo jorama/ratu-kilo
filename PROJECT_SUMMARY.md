@@ -373,7 +373,7 @@ See [`IMPLEMENTATION_GUIDE.md`](IMPLEMENTATION_GUIDE.md) for detailed steps:
 **Project Lead**: TeJoS
 **Email**: tejos@ratu.ai
 **Website**: https://ratu.ai
-**GitHub**: https://github.com/tejos/ratu-sovereign-ai
+**GitHub**: https://github.com/jorama/ratu-kilo
 
 ---
 

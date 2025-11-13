@@ -77,8 +77,8 @@ ratu-sovereign-ai/
 
 ```bash
 # Clone repository
-git clone https://github.com/tejos/ratu-sovereign-ai.git
-cd ratu-sovereign-ai
+git clone https://github.com/jorama/ratu-kilo.git
+cd ratu-kilo
 
 # Install dependencies
 npm install

@@ -14,8 +14,8 @@ Get Ratu running in 5 minutes!
 
 ```bash
 # Clone the repository
-git clone https://github.com/tejos/ratu-sovereign-ai.git
-cd ratu-sovereign-ai
+git clone https://github.com/jorama/ratu-kilo.git
+cd ratu-kilo
 
 # Install dependencies
 npm install
@@ -262,7 +262,7 @@ docker-compose down -v
 ## 🆘 Getting Help
 
 - **Documentation**: https://docs.ratu.ai
-- **GitHub Issues**: https://github.com/tejos/ratu-sovereign-ai/issues
+- **GitHub Issues**: https://github.com/jorama/ratu-kilo/issues
 - **Discord**: https://discord.gg/ratu
 - **Email**: support@ratu.ai
 
